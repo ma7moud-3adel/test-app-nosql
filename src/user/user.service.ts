@@ -2,6 +2,7 @@ import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { User } from './interfaces/user.interface';
 import { CreateUserDto } from './dto/createUser.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @Injectable()
 export class UserService {
@@ -37,6 +38,20 @@ export class UserService {
   // @access : Private
   async createUser(body: CreateUserDto) {
     return await this.userModel.create(body);
+  }
+  // *-----------------*
+  // *-----------------*
+  // @desk : Update User In DB
+  // @route : Patch / user / :id
+  // @access : Private
+  async updateUsersById(userId: string, body: UpdateUserDto): Promise<User> {
+    const user = await this.userModel
+      .findByIdAndUpdate(userId, body)
+      .select('-_id name age email');
+    if (!user) {
+      throw new NotFoundException();
+    }
+    return user;
   }
   // *-----------------*
 }
