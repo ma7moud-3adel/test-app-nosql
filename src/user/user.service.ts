@@ -13,8 +13,8 @@ export class UserService {
   // @desk : Get All Users From DB
   // @route : Get / user
   // @access : Puplic
-  getAllUsers(): Promise<User[]> {
-    return this.userModel.find();
+  async getAllUsers(): Promise<User[]> {
+    return await this.userModel.find().select('-_id name age email');
   }
   // *-----------------*
   // *-----------------*
@@ -22,7 +22,9 @@ export class UserService {
   // @route : Get / user / :id
   // @access : Private
   async getUsersById(userId: string): Promise<User> {
-    const user = await this.userModel.findById(userId);
+    const user = await this.userModel
+      .findById(userId)
+      .select('-_id name age email');
     if (!user) {
       throw new NotFoundException();
     }
