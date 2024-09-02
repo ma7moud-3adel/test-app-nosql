@@ -1,5 +1,6 @@
+import { CreateUserDto } from './dto/createUser.dto';
 import { UserService } from './user.service';
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 @Controller('user')
 export class UserController {
@@ -20,6 +21,15 @@ export class UserController {
   @Get(':userId')
   getUsersById(@Param('userId') userId: string) {
     return this.userService.getUsersById(userId);
+  }
+  // *-----------------*
+  // *-----------------*
+  // @desk : Create Users To DB
+  // @route : Post / user
+  // @access : Private
+  @Post()
+  createUser(@Body() body: CreateUserDto) {
+    return this.userService.createUser(body);
   }
   // *-----------------*
 }

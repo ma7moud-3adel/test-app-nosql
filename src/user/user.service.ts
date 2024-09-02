@@ -1,6 +1,7 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { User } from './interfaces/user.interface';
+import { CreateUserDto } from './dto/createUser.dto';
 
 @Injectable()
 export class UserService {
@@ -26,6 +27,14 @@ export class UserService {
       throw new NotFoundException();
     }
     return user;
+  }
+  // *-----------------*
+  // *-----------------*
+  // @desk : Create Users To DB
+  // @route : Post / user
+  // @access : Private
+  async createUser(body: CreateUserDto) {
+    return await this.userModel.create(body);
   }
   // *-----------------*
 }
