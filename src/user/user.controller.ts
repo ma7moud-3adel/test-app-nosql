@@ -1,13 +1,21 @@
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { UserService } from './user.service';
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
   // *-----------------*
-  // @desk : Get All Users From DB
+  // @desc : Get All Users From DB
   // @route : Get / user
   // @access : Puplic
   @Get()
@@ -16,7 +24,7 @@ export class UserController {
   }
   // *-----------------*
   // *-----------------*
-  // @desk : Get One User By ID From DB
+  // @desc : Get One User By ID From DB
   // @route : Get / user / :id
   // @access : Private
   @Get(':userId')
@@ -25,7 +33,7 @@ export class UserController {
   }
   // *-----------------*
   // *-----------------*
-  // @desk : Create Users To DB
+  // @desc : Create Users To DB
   // @route : Post / user
   // @access : Private
   @Post()
@@ -34,7 +42,7 @@ export class UserController {
   }
   // *-----------------*
   // *-----------------*
-  // @desk : Update User In DB
+  // @desc : Update User In DB
   // @route : Patch / user / :id
   // @access : Private
   @Patch(':userId')
@@ -43,6 +51,15 @@ export class UserController {
     @Body() body: UpdateUserDto,
   ) {
     return this.userService.updateUsersById(userId, body);
+  }
+  // *-----------------*
+  // *-----------------*
+  // @desc : Get One User By ID And Delete From DB
+  // @route : Delete / user / :id
+  // @access : Private[Admin]
+  @Delete(':userId')
+  deleteUsersById(@Param('userId') userId: string) {
+    return this.userService.deleteUsersById(userId);
   }
   // *-----------------*
 }
