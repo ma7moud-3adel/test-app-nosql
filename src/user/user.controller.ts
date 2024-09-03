@@ -1,5 +1,6 @@
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
+import { Roles } from './guards/roles.decorator';
 import { UserService } from './user.service';
 import {
   Body,
@@ -17,7 +18,8 @@ export class UserController {
   // *-----------------*
   // @desc : Get All Users From DB
   // @route : Get / user
-  // @access : Puplic
+  // @access : Private [Admin, Manger]
+  @Roles(['Admin', 'Manger'])
   @Get()
   getAllUsers() {
     return this.userService.getAllUsers();
@@ -26,7 +28,8 @@ export class UserController {
   // *-----------------*
   // @desc : Get One User By ID From DB
   // @route : Get / user / :id
-  // @access : Private
+  // @access : Private ['Admin', 'Manger']
+  @Roles(['Admin', 'Manger'])
   @Get(':userId')
   getUsersById(@Param('userId') userId: string) {
     return this.userService.getUsersById(userId);
@@ -35,7 +38,8 @@ export class UserController {
   // *-----------------*
   // @desc : Create Users To DB
   // @route : Post / user
-  // @access : Private
+  // @access : Private ['Admin']
+  @Roles(['Admin'])
   @Post()
   createUser(@Body() body: CreateUserDto) {
     return this.userService.createUser(body);
@@ -44,7 +48,8 @@ export class UserController {
   // *-----------------*
   // @desc : Update User In DB
   // @route : Patch / user / :id
-  // @access : Private
+  // @access : Private ['Admin', 'Manger']
+  @Roles(['Admin', 'Manger'])
   @Patch(':userId')
   updateUsersById(
     @Param('userId') userId: string,
@@ -57,6 +62,7 @@ export class UserController {
   // @desc : Get One User By ID And Delete From DB
   // @route : Delete / user / :id
   // @access : Private[Admin]
+  @Roles(['Admin'])
   @Delete(':userId')
   deleteUsersById(@Param('userId') userId: string) {
     return this.userService.deleteUsersById(userId);
