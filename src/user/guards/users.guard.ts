@@ -16,7 +16,7 @@ export class UsersGuard implements CanActivate {
   ) {}
   async canActivate(context: ExecutionContext) {
     const roles = this.reflector.get(Roles, context.getHandler());
-    // console.log('roles==> ', roles);
+    console.log('roles==> ', roles);
 
     if (!roles) {
       return true;

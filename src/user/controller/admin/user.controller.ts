@@ -1,3 +1,4 @@
+import { UsersGuard } from 'src/user/guards/users.guard';
 import { CreateUserDto } from '../../dto/admin/createUser.dto';
 import { UpdateUserDto } from '../../dto/admin/updateUser.dto';
 import { Roles } from '../../guards/roles.decorator';
@@ -10,9 +11,11 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 
 @Controller('user')
+@UseGuards(UsersGuard)
 export class UserController {
   constructor(private readonly userService: UserService) {}
   // *-----------------*
