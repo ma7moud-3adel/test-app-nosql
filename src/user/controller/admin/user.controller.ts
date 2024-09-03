@@ -1,7 +1,7 @@
-import { CreateUserDto } from './dto/createUser.dto';
-import { UpdateUserDto } from './dto/updateUser.dto';
-import { Roles } from './guards/roles.decorator';
-import { UserService } from './user.service';
+import { CreateUserDto } from '../../dto/admin/createUser.dto';
+import { UpdateUserDto } from '../../dto/admin/updateUser.dto';
+import { Roles } from '../../guards/roles.decorator';
+import { UserService } from '../../service/admin/user.service';
 import {
   Body,
   Controller,

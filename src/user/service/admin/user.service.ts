@@ -1,8 +1,8 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { User } from './interfaces/user.interface';
-import { CreateUserDto } from './dto/createUser.dto';
-import { UpdateUserDto } from './dto/updateUser.dto';
+import { User } from '../../interfaces/user.interface';
+import { CreateUserDto } from '../../dto/admin/createUser.dto';
+import { UpdateUserDto } from '../../dto/admin/updateUser.dto';
 
 @Injectable()
 export class UserService {
