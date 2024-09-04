@@ -52,7 +52,7 @@ export class UserController {
   // @desc : Update User In DB
   // @route : Patch / user / :id
   // @access : Private ['Admin', 'Manger']
-  @Roles(['Admin', 'Manger'])
+  @Roles(['Admin'])
   @Patch(':userId')
   updateUsersById(
     @Param('userId') userId: string,

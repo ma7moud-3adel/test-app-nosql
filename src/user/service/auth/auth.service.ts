@@ -1,7 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { CreateUserDto } from 'src/user/dto/admin/createUser.dto';
-import { SingInDto } from 'src/user/dto/auth/signin.dto';
+import { SingInDto, SingUpDto } from 'src/user/dto/auth/sign.dto';
 import { User } from 'src/user/interfaces/user.interface';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -33,7 +32,7 @@ export class AuthService {
     });
     return { user, token };
   }
-  async signUp(body: CreateUserDto) {
+  async signUp(body: SingUpDto) {
     const password = await bcrypt.hash(body.password, 10);
     const hashed = {
       name: body.name,

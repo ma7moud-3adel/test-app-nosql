@@ -5,14 +5,14 @@ import {
   UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/user/dto/admin/createUser.dto';
-import { SingInDto } from 'src/user/dto/auth/signin.dto';
-import { Roles } from 'src/user/guards/roles.decorator';
-import { UsersGuard } from 'src/user/guards/users.guard';
+// import { CreateUserDto } from 'src/user/dto/admin/createUser.dto';
+import { SingInDto, SingUpDto } from 'src/user/dto/auth/sign.dto';
+// import { Roles } from 'src/user/guards/roles.decorator';
+// import { UsersGuard } from 'src/user/guards/users.guard';
 import { AuthService } from 'src/user/service/auth/auth.service';
 
 @Controller('sign-in')
-@UseGuards(UsersGuard)
+// @UseGuards(UsersGuard)
 export class AuthSignInController {
   constructor(private readonly authService: AuthService) {}
   @Post()
@@ -25,15 +25,14 @@ export class AuthSignInController {
   }
 }
 @Controller('sign-up')
-@UseGuards(UsersGuard)
+// @UseGuards(UsersGuard)
 export class AuthSingUpController {
-  // Sign-Up
   constructor(private readonly authService: AuthService) {}
   @Post()
   // @Roles(['admin', 'manger', 'user'])
   signUp(
     @Body(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
-    body: CreateUserDto,
+    body: SingUpDto,
   ) {
     return this.authService.signUp(body);
   }
