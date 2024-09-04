@@ -4,12 +4,14 @@ import { CreateUserDto } from 'src/user/dto/admin/createUser.dto';
 import { SingInDto } from 'src/user/dto/auth/signin.dto';
 import { User } from 'src/user/interfaces/user.interface';
 import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     @Inject('USER_MODEL')
     private userModel: Model<User>,
+    private jwtService: JwtService,
   ) {}
   async signIn(body: SingInDto) {
     const { email, password } = body;
@@ -22,7 +24,14 @@ export class AuthService {
     if (!isMatch) {
       throw new NotFoundException();
     }
-    return user;
+    const payload = {
+      email: user.email,
+      role: user.role,
+    };
+    const token = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_SECRET,
+    });
+    return { user, token };
   }
   async signUp(body: CreateUserDto) {
     const password = await bcrypt.hash(body.password, 10);
@@ -31,8 +40,16 @@ export class AuthService {
       age: body.age,
       email: body.email,
       password,
+      role: 'user',
     };
     const user = await this.userModel.create(hashed);
-    return user;
+    const payload = {
+      email: user.email,
+      role: user.role,
+    };
+    const token = await this.jwtService.signAsync(payload, {
+      secret: process.env.JWT_SECRET,
+    });
+    return { user, token };
   }
 }

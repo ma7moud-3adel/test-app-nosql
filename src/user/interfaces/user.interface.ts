@@ -5,4 +5,5 @@ export interface User extends Document {
   readonly age: number;
   readonly email: string;
   readonly password: string;
+  readonly role: string;
 }
