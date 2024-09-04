@@ -3,12 +3,10 @@ import { IsInt, IsString } from 'class-validator';
 import { CreateUserDto } from './createUser.dto';
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {
-  @IsString()
-  name: string;
-
-  @IsInt()
-  age: number;
-
-  @IsString()
-  email: string;
+  // @IsString()
+  // name: string;
+  // @IsInt()
+  // age: number;
+  // @IsString()
+  // email: string;
 }
